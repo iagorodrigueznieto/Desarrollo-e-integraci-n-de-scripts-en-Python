@@ -2,7 +2,7 @@
 
 ## Iniciar MongoDB con Docker
 
-![alttext](https://cdn-icons-png.flaticon.com/512/919/919853.png)
+![alttext](https://cdn-icons-png.flaticon.com/256/919/919853.png)
 Si no tienes docker, [descargalo e instálalo.](https://www.docker.com/products/docker-desktop/)
 
 A continuacion abre una terminal (o consola de comandos) y ejecuta el siguiente comando para levantar un contenedor de MongoDB:
