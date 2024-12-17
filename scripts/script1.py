@@ -11,7 +11,7 @@ client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["city"]
 collection = db["bikes"]
 url_api = "http://api.citybik.es/v2/networks/bicicorunha"  
-minutos = 0.5
+minutos = 3
 try:
     while True:
         response = requests.get(url_api)
