@@ -15,4 +15,14 @@ Si quieres verificar que el conteneder está corriendo:
 `docker ps`
 
 
+## Ejecución de scripts de python
+
+Para la ejecución de los scripts es necesario tener instalado python, y algún gestor de paquetes como por ejemplo conda. 
+Puedes descargar conda [aquí](https://docs.anaconda.com/miniconda/install/#quick-command-line-install).
+
+Ya habiendo instalado conda, podremos crear un entorno a partir del exportado presente en el repositorio a través de este comando ejecutado en la terminal. 
+
+`conda env create -f requirements.yaml`
+
+
 
