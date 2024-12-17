@@ -53,7 +53,7 @@ Se creará un entorno ya con librerías necesarias para ejecutar los scripts del
   
 
 
-### Primer Script
+### Primer script
 
   
 
@@ -68,3 +68,9 @@ Para verificar que los datos están insertados correctamente en la terminal escr
     use city
     db.bikes.find()
 
+### Segundo script
+ El segundo script presente en el repositorio se encargará de pasar los datos de nuestra base de datos mongo a un Dataframe de la librería [pandas](https://pandas.pydata.org/), que podrá ser visto en la consola. Después de esto nuestro Dataframe será exportado a csv y a Parquet. 
+
+  Podremos ejecutar este script con: 
+
+	python script2.py
