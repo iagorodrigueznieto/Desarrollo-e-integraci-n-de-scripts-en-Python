@@ -78,9 +78,12 @@ Para verificar que los datos están insertados correctamente en la terminal escr
 ### :soccer:Tercer script (Parte adicional)
 El tercer script presente en el repositorio es una copia del primero, pero utilizando una [api diferente.](https://www.thesportsdb.com/api/v1/json/3/eventslast.php?id=133602). Esta api devolverá los últimos partidos de un equipo, por lo que el script en un supuesto caso de que esté continuamente funcionando, se actualizará cada 3 días (media de días que pasa para que un equipo juegue un partido). El funcionamiento es exactamente igual al primer script, pero creará una base de datos diferente. 
 Para ejecutar el script: 
-python script3.py
+
+    python script3.py
+
 Para comprobar que los datos están insertados: 
 
     docker exec -it nombre_tu_contenedor mongosh
     use football
     db.matches.find()
+
