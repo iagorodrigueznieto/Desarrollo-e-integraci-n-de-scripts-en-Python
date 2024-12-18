@@ -1,6 +1,8 @@
-name: rag
+name: scripts
 channels:
   - defaults
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
 dependencies:
   - _libgcc_mutex=0.1=main
   - _openmp_mutex=5.1=1_gnu
@@ -23,16 +25,19 @@ dependencies:
   - setuptools=75.1.0=py313h06a4308_0
   - sqlite=3.45.3=h5eee18b_0
   - tk=8.6.14=h39e8969_0
-  - tzdata=2024b=h04d1e81_0
   - wheel=0.44.0=py313h06a4308_0
   - xz=5.4.6=h5eee18b_1
   - zlib=1.2.13=h5eee18b_1
   - pip:
       - asttokens==3.0.0
+      - certifi==2024.12.14
+      - charset-normalizer==3.4.0
       - comm==0.2.2
       - debugpy==1.8.11
       - decorator==5.1.1
+      - dnspython==2.7.0
       - executing==2.1.0
+      - idna==3.10
       - ipykernel==6.29.5
       - ipython==8.30.0
       - jedi==0.19.2
@@ -40,7 +45,9 @@ dependencies:
       - jupyter-core==5.7.2
       - matplotlib-inline==0.1.7
       - nest-asyncio==1.6.0
+      - numpy==2.2.0
       - packaging==24.2
+      - pandas==2.2.3
       - parso==0.8.4
       - pexpect==4.9.0
       - platformdirs==4.3.6
@@ -49,11 +56,16 @@ dependencies:
       - ptyprocess==0.7.0
       - pure-eval==0.2.3
       - pygments==2.18.0
+      - pymongo==4.10.1
       - python-dateutil==2.9.0.post0
+      - pytz==2024.2
       - pyzmq==26.2.0
+      - requests==2.32.3
       - six==1.17.0
       - stack-data==0.6.3
       - tornado==6.4.2
       - traitlets==5.14.3
+      - tzdata==2024.2
+      - urllib3==2.2.3
       - wcwidth==0.2.13
-prefix: /home/bigdata/miniconda3/envs/rag
+prefix: /home/bigdata/miniconda3/envs/scripts
