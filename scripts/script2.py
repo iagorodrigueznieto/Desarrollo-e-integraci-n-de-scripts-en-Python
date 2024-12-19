@@ -3,37 +3,31 @@ import pandas as pd
 
 
 client = MongoClient("mongodb://localhost:27017/")  
-db = client["city"] 
-collection = db["bikes"]  
+db = client['citybik']
+collection =db['stations']
 
-# Obtener todos los documentos de la colección
-documents = list(collection.find())
-
-# Filtrar y normalizar los datos
-filtered_data = []
-for doc in documents:
-    filtered_doc = {
-        "id": doc.get("id"),
-        "name": doc.get("name"),
-        "timestamp": doc.get("timestamp"),
-        "free_bikes": doc.get("free_bikes"),
-        "empty_slots": doc.get("empty_slots"),
+pipeline = [
+    {
+        "$project": {
+            "_id": 0,
+            "id": 1, 
+            "name": 1,
+            "timestamp": 1,
+            "free_bikes": 1,
+            "empty_slots": 1,
+            "uid": 1,
+            "last_updated": 1,
+            "slots": 1,
+            "normal_bikes": 1,
+            "ebikes": 1
+        }
     }
-    extra_data = doc.get("extra", {})
-    filtered_doc.update({
-        "uid": extra_data.get("uid"),
-        "last_updated": extra_data.get("last_updated"),
-        "slots": extra_data.get("slots"),
-        "normal_bikes": extra_data.get("normal_bikes"),
-        "ebikes": extra_data.get("ebikes"),
-    })
-    filtered_data.append(filtered_doc)
+]
 
-# Crear el DataFrame
-df = pd.DataFrame(filtered_data)
+estaciones = collection.aggregate(pipeline)
+df=pd.DataFrame(list(estaciones))
+client.close()
 
-# Exportar a CSV
-output_csv_path = "filtered_output.csv"
-df.to_csv(output_csv_path, index=False)
-
-print(f"Archivo CSV generado: {output_csv_path}")
+df.to_parquet('output/bicis.parquet')
+df.to_csv('output/bicis.csv')
+print('Se han creado los datasets')
