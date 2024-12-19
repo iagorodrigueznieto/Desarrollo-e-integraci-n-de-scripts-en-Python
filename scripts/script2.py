@@ -1,58 +1,39 @@
-import pymongo
+from pymongo import MongoClient
 import pandas as pd
-import os
-from datetime import datetime
 
-MONGO_URI = "mongodb://localhost:27017"
-DATABASE_NAME = "city"
-COLLECTION_NAME = "bikes"
 
-client = pymongo.MongoClient(MONGO_URI)
-db = client[DATABASE_NAME]
-collection = db[COLLECTION_NAME]
+client = MongoClient("mongodb://localhost:27017/")  
+db = client["city"] 
+collection = db["bikes"]  
 
-required_fields = ["_id", "name", "timestamp", "free_bikes", "empty_slots", "uid", "last_updated", "slots", "normal_bikes", "ebikes"]
+# Obtener todos los documentos de la colección
+documents = list(collection.find())
 
-def cargar_datos():
-    try:
-        documentos = collection.find()
+# Filtrar y normalizar los datos
+filtered_data = []
+for doc in documents:
+    filtered_doc = {
+        "id": doc.get("id"),
+        "name": doc.get("name"),
+        "timestamp": doc.get("timestamp"),
+        "free_bikes": doc.get("free_bikes"),
+        "empty_slots": doc.get("empty_slots"),
+    }
+    extra_data = doc.get("extra", {})
+    filtered_doc.update({
+        "uid": extra_data.get("uid"),
+        "last_updated": extra_data.get("last_updated"),
+        "slots": extra_data.get("slots"),
+        "normal_bikes": extra_data.get("normal_bikes"),
+        "ebikes": extra_data.get("ebikes"),
+    })
+    filtered_data.append(filtered_doc)
 
-        datos = []
-        for doc in documentos:
-            doc["_id"] = str(doc["_id"]) if "_id" in doc else None
-            filtered_data = {key: doc.get(key, None) for key in required_fields}
-            if filtered_data.get("timestamp"):
-                try:
-                    filtered_data["timestamp"] = pd.to_datetime(filtered_data["timestamp"])
-                except ValueError:
-                    filtered_data["timestamp"] = None
-            datos.append(filtered_data)
+# Crear el DataFrame
+df = pd.DataFrame(filtered_data)
 
-        df = pd.DataFrame(datos)
+# Exportar a CSV
+output_csv_path = "filtered_output.csv"
+df.to_csv(output_csv_path, index=False)
 
-        print(f"Datos cargados correctamente: {len(df)} registros.")
-        print(df.head())
-
-        return df
-
-    except pymongo.errors.PyMongoError as e:
-        print(f"Error al acceder a MongoDB: {e}")
-        return None
-
-def exportar_datos(df):
-    if df is not None and not df.empty:
-        try:
-            df.to_csv('datos_bicis.csv', index=False)
-            print("Datos exportados a CSV correctamente.")
-
-            df.to_parquet('datos_bicis.parquet', index=False)
-            print("Datos exportados a Parquet correctamente.")
-
-        except Exception as e:
-            print(f"Error al exportar los datos: {e}")
-    else:
-        print("No hay datos para exportar.")
-
-if __name__ == "__main__":
-    df_bicis = cargar_datos()
-    exportar_datos(df_bicis)
+print(f"Archivo CSV generado: {output_csv_path}")
